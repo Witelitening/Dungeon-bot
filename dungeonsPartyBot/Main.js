@@ -1,14 +1,18 @@
+const fs = require('fs');
 const Discord = require('discord.js');
-const { dp, NzI5ODIzMDczNjk5ODg5MTc0.XwOlqA.4fL61VnzHEnYZwYJ5umoqjxtnmc } = require('./package.json');
+const Sequelize = require('sequelize');
+
 const client = new Discord.Client();
-const { prefix, token } = require('./config.json');
+const { prefix, token } = require('./bot-config.json');
 client.login(token);
 
 client.commands = new Discord.Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-client.commands.set('party', require('./commands/party'));
-client.commands.set('create', require('./commands/create'));
-client.commands.set('create', require('./commands/find'));
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(file.substring(0, file.length - 3), command);
+}
 
 client.on('ready', () => {
  	console.log(`Logged in as ${client.user.tag}!`);

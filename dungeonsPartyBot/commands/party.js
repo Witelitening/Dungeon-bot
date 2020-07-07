@@ -1,11 +1,12 @@
 module.exports = (client, message, args, author) => {
-    const command = args.shift().toLowerCase();
+    const commandName = args.shift().toLowerCase();
 
-    switch (command) {
+    switch (commandName) {
         case "create":
-            client.commands.get(command)(client, author);
+            client.commands.get(commandName)(client, message, author, args);
             break;
         case "find":
+
             break;
 
     }

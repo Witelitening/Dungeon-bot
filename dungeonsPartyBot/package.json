@@ -9,8 +9,8 @@
   "author": "C13H10",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.2.0"
-  },
-  "prefix": "dp",
-  "token": "NzI5ODIzMDczNjk5ODg5MTc0.XwOlqA.4fL61VnzHEnYZwYJ5umoqjxtnmc"
+    "discord.js": "^12.2.0",
+    "sequelize": "^6.3.0",
+    "sqlite3": "^5.0.0"
+  }
 }

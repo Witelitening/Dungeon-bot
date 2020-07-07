@@ -1,7 +1,12 @@
-module.exports = (client, author) => {
-    /*
-    let msg = new message();
-    msg.channel.send(`@${author} How large do you want your party to be filled?`);
-    message.
-    */
-}
+module.exports.run = async (client, message, author, args) => {
+    const Discord = require('discord.js');
+
+    if (!args[1]) {
+        message.reply('**Please include a party size**');
+    }
+    const exampleEmbed = new Discord.MessageEmbed()
+        .setColor('LUMINOUS_VIVID_PINK')
+        .setTitle('Class requests')
+        .setDescription('Would you like a berserker in your team?');
+
+};
