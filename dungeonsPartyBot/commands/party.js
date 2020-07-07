@@ -1,4 +1,5 @@
 module.exports.run = async (client, message, args, author) => {
+    console.log('In party');
     const commandName = args.shift().toLowerCase();
     const command = client.commands.get(commandName);
 

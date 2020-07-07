@@ -1,4 +1,5 @@
 module.exports.run = async (client, message, author, args) => {
+    console.log('In create');
     const Discord = require('discord.js');
 
     if (!args[1]) {

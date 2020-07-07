@@ -3,8 +3,7 @@ const Discord = require('discord.js');
 const Sequelize = require('sequelize');
 
 const client = new Discord.Client();
-const { prefix, token } = require('./bot-config.json');
-client.login(token);
+client.config = require('./config.json');
 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -21,3 +20,5 @@ client.on('ready', () => {
 client.on('message', message => {require('./events/message.js').run(client, message, message.author)});
 client.on('messageReactionAdd', (reaction, user) => require('./events/messageReactionAdd.js').execute(client, reaction, user));
 client.on('guildJoined', member => require('./events/guildJoined.js').execute(client, member));
+
+client.login(token);

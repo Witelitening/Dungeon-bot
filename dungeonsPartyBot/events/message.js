@@ -1,8 +1,11 @@
 module.exports.run = async (client, message, author) => {
-    if (!message.content.startsWith(client.prefix) || message.author.bot) return;
+    console.log('In message');
+    if (!message.content.startsWith(client.config.prefix) || message.author.bot) return;
+    console.log('starts with prefix');
 
-	const args = message.content.slice(prefix.length).split(' ');
+	const args = message.content.slice(client.prefix.length).trim().split(' ');
     const commandName = args.shift().toLowerCase();
+    console.log(args[0]);
     
     if(!client.commands.has(commandName)) return;
     const command = client.commands.get(commandName);
