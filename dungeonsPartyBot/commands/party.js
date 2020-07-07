@@ -1,9 +1,10 @@
-module.exports = (client, message, args, author) => {
+module.exports.run = async (client, message, args, author) => {
     const commandName = args.shift().toLowerCase();
+    const command = client.commands.get(commandName);
 
     switch (commandName) {
         case "create":
-            client.commands.get(commandName)(client, message, author, args);
+            command.run(client, message, author, args);
             break;
         case "find":
 

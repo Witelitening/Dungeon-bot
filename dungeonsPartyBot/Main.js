@@ -18,6 +18,6 @@ client.on('ready', () => {
  	console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', message => require('./events/message.js')(client, message, message.author));
-client.on('messageReactionAdd', (reaction, user) => require('./events/messageReactionAdd.js')(client, reaction, user));
-client.on('guildJoined', member => require('./events/guildJoined.js')(client, member));
+client.on('message', message => {require('./events/message.js').run(client, message, message.author)});
+client.on('messageReactionAdd', (reaction, user) => require('./events/messageReactionAdd.js').execute(client, reaction, user));
+client.on('guildJoined', member => require('./events/guildJoined.js').execute(client, member));
