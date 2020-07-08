@@ -10,7 +10,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	client.commands.set(file.substring(0, file.length - 3), command);
+	client.commands.set(command.help.name, command);
 }
 
 client.on('ready', () => {
