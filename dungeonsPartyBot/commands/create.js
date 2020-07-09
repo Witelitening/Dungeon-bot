@@ -7,16 +7,10 @@ module.exports.run = async (client, message, args, author) => {
         .setTitle('Class requests')
         .setDescription('Do you have any special requests?');
     message.channel.send(embed1);
-    const filter = m => m.content.includes('discord');
-    const collector = message.channel.createMessageCollector(filter, { time: 15000 });
 
-    collector.on('collect', m => {
+    const collector = message.channel.createMessageCollector(message.channel, m => m.author.id === message.author.id, { time: 15000 });
+    collector.once('collect', m => {
         console.log(`Collected ${m.content}`);
-        collector.stop();
-    });
-
-    collector.on('end', collected => {
-	    console.log(`Collected ${collected.size} items`);
     });
 };
 
