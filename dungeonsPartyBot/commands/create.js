@@ -1,6 +1,5 @@
 const fs = require('fs');
 const users = require('../users.json');
-const parties = require('../parties.json');
 
 module.exports.run = async (client, message, args, author) => {
     const Discord = require('discord.js');
@@ -11,17 +10,36 @@ module.exports.run = async (client, message, args, author) => {
             name = client.users.get(author.id).tag,
             inParty = true,
             partyID = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1),
+            partyLeader = true,
+            description = null,
+            partyMembers = [],
+            dungeonFloor = null,
         }
         fs.writeFile('../users.json', JSON.stringify(users), (err) => {
             if(err) console.log(err);
         });
     }
 
-    //send embed asking for a description
+    //send embed asking for party floor
     const embed1 = new Discord.MessageEmbed()
         .setColor('LUMINOUS_VIVID_PINK')
+        .setTitle('Select floor')
+        .setDescription('`What floor will your party play?`');
+    message.channel.send(embed1);
+
+    //get party floor
+    let floor;
+    const collector = message.channel.createMessageCollector(message.channel, m => m.author.id === message.author.id, { time: 15000 });
+    collector.once('collect', m => {
+        floor = Number(m.content);
+        console.log(`Collected ${m.content}`);
+    });
+
+    //send embed asking for party description
+    const embed2 = new Discord.MessageEmbed()
+        .setColor('LUMINOUS_VIVID_PINK')
         .setTitle('Add description')
-        .setDescription('What would you like your party description to be?');
+        .setDescription('`What would you like your party description to be?`');
     message.channel.send(embed1);
 
     //get party description/requests
@@ -32,15 +50,7 @@ module.exports.run = async (client, message, args, author) => {
         console.log(`Collected ${m.content}`);
     });
 
-    //create party
-    parties[users[author.id].partyID] = {
-        partyLeader = client.users.get(author.id).tag,
-        description = desc,
-        partyMembers = [],
-    }
-    fs.writeFile('../parties.json', JSON.stringify(users), (err) => {
-        if(err) console.log(err);
-    });
+    users[author.id].description = desc;
 };
 
 module.exports.help = {
