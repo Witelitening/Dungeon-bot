@@ -11,7 +11,7 @@ module.exports.run = (client, message, args, author) => {
     let f2PartiesDesc = [];
     let f3PartiesDesc = [];
     for(let i = 0; i < users.length; i++) {
-        if(users[i].partyLeader) {
+        if(users[i].isPartyLeader) {
             switch(users[i].dungeonFloor) {
                 case 0:
                     entranceParties.push(users[i].name.substring(0, users[i].name.length - 4) + "'s party");
@@ -50,7 +50,9 @@ module.exports.run = (client, message, args, author) => {
 }
 
 module.exports.help = {
-    name: 'find'
+    name: 'find',
+    description: 'Finds active dungeon parties',
+    usage: 'p!find'
 }
 
 function addField(list, desc) {

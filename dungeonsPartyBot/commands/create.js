@@ -9,8 +9,8 @@ module.exports.run = async (client, message, args, author) => {
         users[author.id] = {
             name = client.users.get(author.id).tag,
             inParty = true,
-            partyID = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1),
-            partyLeader = true,
+            isPartyLeader = true,
+            partyLeader = null,
             description = null,
             partyMembers = [],
             dungeonFloor = null,
@@ -50,9 +50,12 @@ module.exports.run = async (client, message, args, author) => {
         console.log(`Collected ${m.content}`);
     });
 
-    users[author.id].description = desc;
+    users[author.id].description = String(desc);
+    users[author.id].dungeonFloor = Number(floor);
 };
 
 module.exports.help = {
-    name: 'create'
+    name: 'create',
+    description: 'Used to create dungeon parties',
+    usage: 'p!create'
 }

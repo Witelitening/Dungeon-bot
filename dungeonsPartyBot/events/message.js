@@ -1,9 +1,11 @@
+const { prefix } = require('../config.json');
+
 module.exports.run = async (client, message, author) => {
     console.log('In message');
-    if (!message.content.startsWith(client.config.prefix) || message.author.bot) return;
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
     console.log('starts with prefix');
 
-	const args = message.content.slice(client.config.prefix.length).split(' ');
+	const args = message.content.slice(prefix.length).split(' ');
     const commandName = args.shift().toLowerCase();
     console.log(args[0]);
     
