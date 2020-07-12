@@ -2,6 +2,7 @@ const fs = require('fs');
 const users = require('../users.json');
 
 module.exports.run = (client, message, args, author) => {
+    const Discord = require('discord.js')
     let entranceParties = [];
     let f1Parties = [];
     let f2Parties = [];
@@ -41,7 +42,7 @@ module.exports.run = (client, message, args, author) => {
         .setColor('LUMINOUS_VIVID_PINK')
         .setTitle('Active Dungeon Parties')
         .addFields(
-            {name: 'Entrance', value: entraceField},
+            {name: 'Entrance', value: entranceField},
             {name: 'Floor 1', value: f1Field},
             {name: 'Floor 2', value: f2Field},
             {name: 'Floor 3', value: f3Field},
@@ -59,6 +60,9 @@ function addField(list, desc) {
     var ret = '';
     for(var i = 0; i < list.length; i++) {
         ret.concat(list[i], '\n`', desc[i], '`\n\n')
+    }
+    if(ret == '') {
+        ret = '`No parties found`';
     }
     return ret
 }

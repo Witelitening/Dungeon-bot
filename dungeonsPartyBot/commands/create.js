@@ -7,13 +7,13 @@ module.exports.run = async (client, message, args, author) => {
     //create user profile if not existing
     if(!users[author.id]) {
         users[author.id] = {
-            name = client.users.get(author.id).tag,
-            inParty = true,
-            isPartyLeader = true,
-            partyLeader = null,
-            description = null,
-            partyMembers = [],
-            dungeonFloor = null,
+            name: author.tag,
+            inParty: true,
+            isPartyLeader: true,
+            partyLeader: null,
+            description: null,
+            partyMembers: [],
+            dungeonFloor: null,
         }
         fs.writeFile('../users.json', JSON.stringify(users), (err) => {
             if(err) console.log(err);
@@ -29,10 +29,14 @@ module.exports.run = async (client, message, args, author) => {
 
     //get party floor
     let floor;
-    const collector = message.channel.createMessageCollector(message.channel, m => m.author.id === message.author.id, { time: 15000 });
-    collector.once('collect', m => {
+    const collector = message.channel.createMessageCollector(message.channel, { time: 3000 });
+    collector.on('collect', m => {
         floor = Number(m.content);
         console.log(`Collected ${m.content}`);
+    });
+
+    collector.on('end', collected => {
+        console.log(`Collected ${collected.size} items`);
     });
 
     //send embed asking for party description
@@ -40,14 +44,18 @@ module.exports.run = async (client, message, args, author) => {
         .setColor('LUMINOUS_VIVID_PINK')
         .setTitle('Add description')
         .setDescription('`What would you like your party description to be?`');
-    message.channel.send(embed1);
+    message.channel.send(embed2);
 
     //get party description/requests
     let desc;
-    const collector = message.channel.createMessageCollector(message.channel, m => m.author.id === message.author.id, { time: 15000 });
-    collector.once('collect', m => {
+    const collector1 = message.channel.createMessageCollector(message.channel, { time: 15000 });
+    collector1.on('collect', m => {
         desc = m.content;
         console.log(`Collected ${m.content}`);
+    });
+
+    collector1.on('end', collected => {
+        console.log(`Collected ${collected.size} items`);
     });
 
     users[author.id].description = String(desc);

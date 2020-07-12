@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
-const { prefix, token} = require('../config.json');
+const { prefix, token} = require('./config.json');
 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -14,7 +14,6 @@ for (const file of commandFiles) {
 
 client.on('ready', () => {
 	 console.log(`Logged in as ${client.user.tag}!`);
-	 Tags.sync();
 });
 
 client.on('message', message => {require('./events/message.js').run(client, message, message.author)});
