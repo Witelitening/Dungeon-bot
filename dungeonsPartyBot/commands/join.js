@@ -1,16 +1,32 @@
 const users = require('../users.json');
 
 module.exports.run = (client, message, args, author) => {
-    if(args[0]) {
-        const leader = getUserFromMention(args[0]);
-        const pLeader = users[leader.id];
-        const user = users[author.id];
+    const Discord = include('discord.js');
+    const leader = getUserFromMention(args[0]);
+    const pLeader = users[leader.id];
+    const user = users[author.id];
 
+    if(user.inParty) {
+        const embed = new Discord.MessageEmbed()
+            .setColor('LUMINOUS_VIVID_PINK')
+            .setDescription(`You must leave/disband the party you're currently in to join another party.`)
+        return message.channel.send(`||@${author.username}|| ${embed}`);
+    } 
+    if(args[0]) {
         pLeader.partyMembers.push(author);
 
         user.partyLeader = client.users.get(leader.id).tag;
         user.inParty = true;
         user.dungeonFloor = pLeader.dungeonFloor;
+        const embed = new Discord.MessageEmbed()
+            .setColor('LUMINOUS_VIVID_PINK')
+            .setDescription(`You have joined ${leader.displayName}'s party.`)
+        message.channel.send(`||@${author.username}|| ${embed}`);
+    } else {
+        const embed = new Discord.MessageEmbed()
+            .setColor('LUMINOUS_VIVID_PINK')
+            .setDescription('Please @ mention the party leader of the party you want to join.')
+        message.channel.send(`||@${author.username}|| ${embed}`);
     }
 }
 

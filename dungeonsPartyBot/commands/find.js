@@ -58,7 +58,7 @@ module.exports.help = {
 function addField(list, desc) {
     var ret = '';
     for(var i = 0; i < list.length; i++) {
-        ret.concat(list[i], '/n`', desc[i], '`/n')
+        ret.concat(list[i], '\n`', desc[i], '`\n\n')
     }
     return ret
 }
