@@ -2,7 +2,7 @@ const fs = require('fs');
 
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js');
-    const user = require('../users.json');
+    const user = JSON.parse(fs.readFileSync('../users.json', 'utf8'));
 
     if(user[author.id].inParty) {
         user[author.id] = {
@@ -10,14 +10,10 @@ module.exports.run = (client, message, args, author) => {
             inParty: false,
             isPartyLeader: false,
             partyLeader: null,
-            description: null,
             partyMembers: [],
+            description: null,
             dungeonFloor: null,
         }
-        fs.writeFile('../users.json', JSON.stringify(user), (err) => {
-            if(err) return console.log(err)
-        });
-        
         if(user[author.id].isPartyLeader) {
             for(member of user[author.id].partyMembers) {
                 user[member.id] = {
@@ -25,15 +21,15 @@ module.exports.run = (client, message, args, author) => {
                     inParty: false,
                     isPartyLeader: false,
                     partyLeader: null,
-                    description: null,
                     partyMembers: [],
+                    description: null,
                     dungeonFloor: null,
                 }
-                fs.writeFile('../users.json', JSON.stringify(user), (err) => {
-                    if(err) return console.log(err)
-                });
             }
         }
+        fs.writeFile('../users.json', JSON.stringify(user), (err) => {
+            if(err) return console.log(err)
+        });
     } else {
         const embed = new Discord.MessageEmbed()
             .setColor('LUMINOUS_VIVID_PINK')
