@@ -1,13 +1,13 @@
 const fs = require('fs');
-const users = require('../users.json');
+const users = JSON.parse(fs.readFileSync('./users.json', 'utf8'));
 
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js')
-    let entranceParties = [];
+    let entranceParties = ["a", "a"];
     let f1Parties = [];
     let f2Parties = [];
     let f3Parties = [];
-    let entrancePartiesDesc = [];
+    let entrancePartiesDesc = ["a", "a"];
     let f1PartiesDesc = [];
     let f2PartiesDesc = [];
     let f3PartiesDesc = [];

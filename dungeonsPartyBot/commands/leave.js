@@ -2,31 +2,38 @@ const fs = require('fs');
 
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js');
-    const user = JSON.parse(fs.readFileSync('./users.json', 'utf8'));
+    const user = require('../users.json');
 
-    if(!user[author.id]) {
+    if(user[author.id].inParty) {
         user[author.id] = {
-            inParty = false,
-            dungeonFloor = null,
-            partyLeader = null,
+            name: author.tag,
+            inParty: false,
+            isPartyLeader: false,
+            partyLeader: null,
+            description: null,
+            partyMembers: [],
+            dungeonFloor: null,
         }
-        
-        if(user[author.id].isPartyLeader) {
-            user[author.id] = {
-                isPartyLeader: false,
-                description: null,
-            }
-            for(member of partyMembers) {
-                user[member.id] = {
-                    inParty: false,
-                    dungeonFloor: false,
-                    partyLeader: false,
-                }     
-            }
-        }
-        fs.writeFile('./users.json', JSON.stringify(user), (err) => {
+        fs.writeFile('../users.json', JSON.stringify(user), (err) => {
             if(err) return console.log(err)
         });
+        
+        if(user[author.id].isPartyLeader) {
+            for(member of user[author.id].partyMembers) {
+                user[member.id] = {
+                    name: member.tag,
+                    inParty: false,
+                    isPartyLeader: false,
+                    partyLeader: null,
+                    description: null,
+                    partyMembers: [],
+                    dungeonFloor: null,
+                }
+                fs.writeFile('../users.json', JSON.stringify(user), (err) => {
+                    if(err) return console.log(err)
+                });
+            }
+        }
     } else {
         const embed = new Discord.MessageEmbed()
             .setColor('LUMINOUS_VIVID_PINK')

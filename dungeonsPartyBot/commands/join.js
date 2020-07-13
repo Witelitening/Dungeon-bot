@@ -1,7 +1,7 @@
 const users = require('../users.json');
 
 module.exports.run = (client, message, args, author) => {
-    const Discord = include('discord.js');
+    const Discord = require('discord.js');
     const leader = getUserFromMention(args[0]);
     const user = JSON.parse(fs.readFileSync('./users.json', 'utf8'));
 
@@ -41,7 +41,7 @@ module.exports.run = (client, message, args, author) => {
 module.exports.help = {
     name: 'join',
     description: 'Lets you join a party',
-    usage: 'p!join (@party leader)',
+    usage: 'p!join {@party leader}',
 }
 
 function getUserFromMention(mention) {
