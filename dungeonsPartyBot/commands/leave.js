@@ -2,31 +2,28 @@ const fs = require('fs');
 
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js');
-    const user = JSON.parse(fs.readFileSync('../users.json', 'utf8'));
+    const users = JSON.parse(fs.readFileSync('../users.json', 'utf8'));
+    const user = users[author.id];
 
-    if(user[author.id].inParty) {
-        user[author.id] = {
-            name: author.tag,
-            inParty: false,
-            isPartyLeader: false,
-            partyLeader: null,
-            partyMembers: [],
-            description: null,
-            dungeonFloor: null,
-        }
-        if(user[author.id].isPartyLeader) {
-            for(member of user[author.id].partyMembers) {
-                user[member.id] = {
-                    name: member.tag,
-                    inParty: false,
-                    isPartyLeader: false,
-                    partyLeader: null,
-                    partyMembers: [],
-                    description: null,
-                    dungeonFloor: null,
-                }
+    if(user.inParty) {
+        if(user.isPartyLeader) {
+            for(member of users[author.id].partyMembers) {
+                mbr = users[member.id];
+                
+                mbr.inParty = false;
+                mbr.partyLeader = null;
+                mbr.description = '';
+                mbr.dungeonFloor = null;
             }
         }
+
+        user.inParty = false;
+        user.isPartyLeader = false;
+        user.partyLeader = null;
+        user.partyMembers = [];
+        user.description = '';
+        user.dungeonFloor = null;
+
         fs.writeFile('../users.json', JSON.stringify(user), (err) => {
             if(err) return console.log(err)
         });

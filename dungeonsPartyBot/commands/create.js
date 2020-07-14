@@ -3,8 +3,11 @@ const fs = require('fs');
 module.exports.run = async (client, message, args, author) => {
     const Discord = require('discord.js');
     const users = JSON.parse(fs.readFileSync('../users.json', 'utf8'));
+    const user = users[author.id];
 
-    //create user profile if not existing
+    if(!args[0]) {
+        return message.channel.send(`@${author.username} Please include the dungeon floor your party will play.`)
+    }
 
     //send embed asking for party description
     const embed = new Discord.MessageEmbed()
@@ -21,17 +24,24 @@ module.exports.run = async (client, message, args, author) => {
         desc = m.content.toString();
         console.log(`Collected ${m.content}`);
 
-        if(!users[author.id]) {
-            users[author.id] = {
+        if(!user) {
+            user = {
                 name: author.tag,
                 inParty: true,
                 isPartyLeader: true,
-                partyLeader: author.tag,
+                partyLeader: author.username,
                 partyMembers: [],
                 description: desc,
                 dungeonFloor: Number(args.shift()),
             }
+        } else {
+            user.inParty = true;
+            user.isPartyLeader = true;
+            user.partyLeader = author.username;
+            user.description = desc;
+            user.dungeonFloor = Number(args.shift());
         }
+
         fs.writeFile('../users.json', JSON.stringify(users), (err) => {
             if(err) console.log(err);
         });

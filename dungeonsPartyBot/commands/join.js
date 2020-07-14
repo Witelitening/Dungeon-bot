@@ -12,15 +12,23 @@ module.exports.run = (client, message, args, author) => {
         return message.channel.send(`||@${author.username}|| ${embed}`);
     } 
     if(args[0]) {
-        user[pLeader.id] = {
-            partyMembers: partyMembers.push(author),
+        if(!user[author.id]) {
+            user[author.id] = {
+                name: author.tag,
+                inParty: true,
+                isPartyLeader: false,
+                partyLeader: pLeader.username,
+                partyMembers: [],
+                description: user[pleader.id].description,
+                dungeonFloor: user[pleader.id].dungeonFloor,
+            }
+        } else {
+            user[author.id].partyLeader = pLeader.username;
+            user[author.id].inParty = true;
+            user[author.id].description = user[pleader.id].description;
+            user[author.id].dungeonFloor = user[pleader.id].dungeonFloor;
         }
-
-        user[author.id] = {
-            partyLeader: pLeader.tag,
-            inParty: true,
-            dungeonFloor: user[pLeader.id].dungeonFloor,
-        }
+        user[pLeader.id].partyMembers.push(author)
 
         fs.writeFile('./users.json', JSON.stringify(user), (err) => {
             if(err) return console.log(err)
