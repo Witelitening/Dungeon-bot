@@ -1,8 +1,7 @@
-const users = require('../users.json');
-
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js');
-    const leader = getUserFromMention(args[0]);
+    const users = require('../users.json');
+    const leader = getUserFromMention(args[0], client);
 
     if(author.id == leader.id) {
         const embed = new Discord.MessageEmbed()
@@ -10,15 +9,15 @@ module.exports.run = (client, message, args, author) => {
             .setDescription(`You cannot join your own party.`)
         return message.channel.send(`||@${author.username}|| ${embed}`);
     }
-    if(user[author.id].inParty) {
+    if(users[author.id].inParty) {
         const embed = new Discord.MessageEmbed()
             .setColor('LUMINOUS_VIVID_PINK')
             .setDescription(`You must leave/disband the party you're currently in to join another party.`)
         return message.channel.send(`||@${author.username}|| ${embed}`);
     } 
     if(args[0]) {
-        if(!user[author.id]) {
-            user[author.id] = {
+        if(!users[author.id]) {
+            users[author.id] = {
                 name: author.tag,
                 inParty: true,
                 isPartyLeader: false,
@@ -28,14 +27,14 @@ module.exports.run = (client, message, args, author) => {
                 dungeonFloor: user[pleader.id].dungeonFloor,
             }
         } else {
-            user[author.id].partyLeader = pLeader.username;
-            user[author.id].inParty = true;
-            user[author.id].description = user[pleader.id].description;
-            user[author.id].dungeonFloor = user[pleader.id].dungeonFloor;
+            users[author.id].partyLeader = pLeader.username;
+            users[author.id].inParty = true;
+            users[author.id].description = user[pleader.id].description;
+            users[author.id].dungeonFloor = user[pleader.id].dungeonFloor;
         }
         user[pLeader.id].partyMembers.push(author)
 
-        fs.writeFile('./users.json', JSON.stringify(user), (err) => {
+        fs.writeFile('./users.json', JSON.stringify(users), (err) => {
             if(err) return console.log(err)
         })
 
@@ -57,7 +56,7 @@ module.exports.help = {
     usage: 'p!join {@party leader}',
 }
 
-function getUserFromMention(mention) {
+function getUserFromMention(mention, client) {
 	if (!mention) return;
 
 	if (mention.startsWith('<@') && mention.endsWith('>')) {

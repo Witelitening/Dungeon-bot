@@ -1,8 +1,8 @@
 const fs = require('fs');
-const users = require('../users.json');
 
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js');
+    const users = require('../users.json');
     const user = users[author.id];
 
     if(user.inParty) {
@@ -24,7 +24,7 @@ module.exports.run = (client, message, args, author) => {
         user.description = '';
         user.dungeonFloor = null;
 
-        fs.writeFile('../users.json', JSON.stringify(user), (err) => {
+        fs.writeFile('./users.json', JSON.stringify(user), (err) => {
             if(err) return console.log(err)
         });
     } else {

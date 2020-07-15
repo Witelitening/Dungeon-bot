@@ -1,8 +1,9 @@
 const fs = require('fs');
-const users = require('../users.json');
+
 
 module.exports.run = (client, message, args, author) => {
-    const Discord = require('discord.js')
+    const Discord = require('discord.js');
+    const users = require('../users.json');
     let entranceParties = [];
     let f1Parties = [];
     let f2Parties = [];
@@ -15,19 +16,19 @@ module.exports.run = (client, message, args, author) => {
         if(users[user].isPartyLeader) {
             switch(users[user].dungeonFloor) {
                 case 0:
-                    entranceParties.push(users[user].name.substring(0, users[user].name.length - 4) + "'s party");
+                    entranceParties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
                     entrancePartiesDesc.push(users[i].description);
                     break;
                 case 1:
-                    f1Parties.push(users[user].name.substring(0, users[user].name.length - 4) + "'s party");
+                    f1Parties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
                     f1PartiesDesc.push(users[user].description);
                     break;
                 case 2:
-                    f2Parties.push(users[user].name.substring(0, users[user].name.length - 4) + "'s party");
+                    f2Parties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
                     f2PartiesDesc.push(users[user].description);
                     break;
                 case 3:
-                    f3Parties.push(users[user].name.substring(0, users[user].name.length - 4) + "'s party");
+                    f3Parties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
                     f3PartiesDesc.push(users[user].description);
                     break;
             }
@@ -57,9 +58,9 @@ module.exports.help = {
 }
 
 function addField(list, desc) {
-    var ret = ' ';
+    var ret = '';
     for(var i = 0; i < list.length; i++) {
-        ret.concat(list[i], '\n`', desc[i], '`\n\n')
+        ret = ret + '`' + list[i] + '\n' + desc[i] + '`\n\n';
     }
     if(ret == '') {
         ret = '`No parties found`';

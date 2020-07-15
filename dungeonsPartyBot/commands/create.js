@@ -1,12 +1,11 @@
 const fs = require('fs');
-const users = require('../users.json');
 
 module.exports.run = async (client, message, args, author) => {
     const Discord = require('discord.js');
-    const user = users[author.id];
+    const users = require('../users.json');
 
     if(!args[0]) {
-        return message.channel.send(`@${author.username} Please include the dungeon floor your party will play.`)
+        return message.reply(`Please include the dungeon floor your party will play.`)
     }
 
     //send embed asking for party description
@@ -34,12 +33,12 @@ module.exports.run = async (client, message, args, author) => {
                 description: desc,
                 dungeonFloor: Number(args.shift()),
             }
-        } else {
-            user.inParty = true;
-            user.isPartyLeader = true;
-            user.partyLeader = author.username;
-            user.description = desc;
-            user.dungeonFloor = Number(args.shift());
+        } else if(!users[author.id].inParty) {
+            users[author.id].inParty = true;
+            users[author.id].isPartyLeader = true;
+            users[author.id].partyLeader = author.username;
+            users[author.id].description = desc;
+            users[author.id].dungeonFloor = Number(args.shift());
         }
 
         fs.writeFile('./users.json', JSON.stringify(users), (err) => {
