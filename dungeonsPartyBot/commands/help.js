@@ -1,12 +1,11 @@
-const { MessageAttachment } = require("discord.js");
+const { prefix } = require('../config.json');
 
 module.exports.run = async (client, message, args, author) => {
     const data = [];
-    const { commands } = client.commands;
 
     if (!args.length) {
 	    data.push('Here\'s a list of all my commands:');
-        data.push(commands.map(command => command.help.name).join(', '));
+        data.push(client.commands.map(command => command.help.name).join(', '));
         data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
 
         return message.author.send(data, { split: true })
@@ -21,7 +20,7 @@ module.exports.run = async (client, message, args, author) => {
     }
 
     const name = args[0].toLowerCase();
-    const command = commands.get(name);
+    const command = client.commands.get(name);
     if (!command) {
     	return message.reply('that\'s not a valid command!');
     }
@@ -29,7 +28,7 @@ module.exports.run = async (client, message, args, author) => {
     data.push(`**Name:** ${command.help.name}`);
 
     if (command.help.description) data.push(`**Description:** ${command.help.description}`);
-    if (command.help.usage) data.push(`**Usage:** ${prefix}${command.help.name} ${command.help.usage}`);
+    if (command.help.usage) data.push(`**Usage:** ${command.help.usage}`);
 
     message.channel.send(data, { split: true });
 }

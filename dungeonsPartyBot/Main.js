@@ -5,12 +5,13 @@ const client = new Discord.Client();
 const { prefix, token} = require('./config.json');
 
 client.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.help.name, command);
-}
+client.commands.set('create', require('./commands/create.js'));
+client.commands.set('find', require('./commands/find.js'));
+client.commands.set('help', require('./commands/help.js'));
+client.commands.set('join', require('./commands/join.js'));
+client.commands.set('leave', require('./commands/leave.js'));
+const commandNames = client.commands.map(command => command.help.name).join(', ');
 
 client.on('ready', () => {
 	 console.log(`Logged in as ${client.user.tag}!`);

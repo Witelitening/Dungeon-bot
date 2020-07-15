@@ -12,7 +12,7 @@ module.exports.run = async (client, message, author) => {
     try {
         command.run(client, message, args, author);
     } catch (error) {
-        message.reply('there was an error trying to execute that command!');
+        message.reply('There was an error trying to execute that command!');
         console.log(`Error while executing command '${commandName}' with arguments: ${args}`);
         client.commands.get('help').run(client, message, args, author);
         console.error(error);

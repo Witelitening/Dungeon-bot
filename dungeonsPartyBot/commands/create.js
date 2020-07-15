@@ -24,8 +24,8 @@ module.exports.run = async (client, message, args, author) => {
         desc = m.content.toString();
         console.log(`Collected ${m.content}`);
 
-        if(!user) {
-            user = {
+        if(!users[author.id]) {
+            users[author.id] = {
                 name: author.tag,
                 inParty: true,
                 isPartyLeader: true,

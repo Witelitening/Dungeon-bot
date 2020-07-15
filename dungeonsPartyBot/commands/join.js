@@ -5,6 +5,12 @@ module.exports.run = (client, message, args, author) => {
     const leader = getUserFromMention(args[0]);
     const user = JSON.parse(fs.readFileSync('./users.json', 'utf8'));
 
+    if(author.id == leader.id) {
+        const embed = new Discord.MessageEmbed()
+            .setColor('LUMINOUS_VIVID_PINK')
+            .setDescription(`You cannot join your own party.`)
+        return message.channel.send(`||@${author.username}|| ${embed}`);
+    }
     if(user[author.id].inParty) {
         const embed = new Discord.MessageEmbed()
             .setColor('LUMINOUS_VIVID_PINK')
