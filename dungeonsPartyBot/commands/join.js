@@ -3,7 +3,6 @@ const users = require('../users.json');
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js');
     const leader = getUserFromMention(args[0]);
-    const user = JSON.parse(fs.readFileSync('./users.json', 'utf8'));
 
     if(author.id == leader.id) {
         const embed = new Discord.MessageEmbed()

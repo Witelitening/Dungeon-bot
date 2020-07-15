@@ -1,8 +1,8 @@
 const fs = require('fs');
+const users = require('../users.json');
 
 module.exports.run = (client, message, args, author) => {
     const Discord = require('discord.js');
-    const users = JSON.parse(fs.readFileSync('../users.json', 'utf8'));
     const user = users[author.id];
 
     if(user.inParty) {
