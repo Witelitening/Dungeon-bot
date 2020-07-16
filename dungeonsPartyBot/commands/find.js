@@ -48,7 +48,7 @@ module.exports.run = (client, message, args, author) => {
             {name: '**Floor 2:**', value: f2Field},
             {name: '**Floor 3:**', value: f3Field},
         )
-    message.channel.send(embed1);
+    return message.channel.send(embed1);
 }
 
 module.exports.help = {

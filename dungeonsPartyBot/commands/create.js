@@ -45,6 +45,17 @@ module.exports.run = async (client, message, args, author) => {
             if(err) console.log(err);
         });
     });
+    const ret = new Discord.MessageEmbed()
+        .setColor('LUMINOUS_VIVID_PINK')
+        .setTitle('Party Created')
+        .setDescription(`You have created your party for floor ${users[author.id].dungeonFloor} with description '${desc}'`);
+    return message.author.send(ret).then(() => {
+        if (message.channel.type === 'dm') return;
+		message.channel.send(`||@dp1|| ${author.username} has created a party for floor ${users[author.id].dungeonFloor}`);
+    }).catch(error => {
+        console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
+		message.reply(ret);
+    })
 };
 
 module.exports.help = {
