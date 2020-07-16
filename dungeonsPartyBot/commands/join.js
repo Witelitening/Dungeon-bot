@@ -25,14 +25,14 @@ module.exports.run = (client, message, args, author) => {
                 isPartyLeader: false,
                 partyLeader: pLeader.username,
                 partyMembers: [],
-                description: user[pleader.id].description,
-                dungeonFloor: user[pleader.id].dungeonFloor,
+                description: user[leader.id].description,
+                dungeonFloor: user[leader.id].dungeonFloor,
             }
         } else if(!users[author.id].inParty) {
-            users[author.id].partyLeader = pLeader.username;
+            users[author.id].partyLeader = leader.username;
             users[author.id].inParty = true;
-            users[author.id].description = user[pleader.id].description;
-            users[author.id].dungeonFloor = user[pleader.id].dungeonFloor;
+            users[author.id].description = user[leader.id].description;
+            users[author.id].dungeonFloor = user[leader.id].dungeonFloor;
         } else {
             return message.reply('You must leave your current party to join another one.')
         }
