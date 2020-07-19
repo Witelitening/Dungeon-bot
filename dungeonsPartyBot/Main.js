@@ -21,4 +21,4 @@ client.on('message', message => {require('./events/message.js').run(client, mess
 client.on('messageReactionAdd', (reaction, user) => require('./events/messageReactionAdd.js').execute(client, reaction, user));
 client.on('guildJoined', member => require('./events/guildJoined.js').execute(client, member));
 
-client.login(token);
+client.login('Your token here');
