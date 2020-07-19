@@ -9,15 +9,13 @@ module.exports.run = (client, message, args, author) => {
         const embed = new Discord.MessageEmbed()
             .setColor('LUMINOUS_VIVID_PINK')
             .setDescription(`You cannot join your own party.`)
-        return message.channel.send(`||@${author.username}|| ${embed}`);
-    }
-    if(users[author.id].inParty) {
+        return message.reply(`${embed}`);
+    } else if(users[author.id].inParty) {
         const embed = new Discord.MessageEmbed()
             .setColor('LUMINOUS_VIVID_PINK')
             .setDescription(`You must leave/disband the party you're currently in to join another party.`)
-        return message.channel.send(`||@${author.username}|| ${embed}`);
-    } 
-    if(args[0]) {
+        return message.channel.send(`${embed}`);
+    } else if(args[0]) {
         if(!users[author.id]) {
             users[author.id] = {
                 name: author.tag,
@@ -25,14 +23,14 @@ module.exports.run = (client, message, args, author) => {
                 isPartyLeader: false,
                 partyLeader: pLeader.username,
                 partyMembers: [],
-                description: user[leader.id].description,
-                dungeonFloor: user[leader.id].dungeonFloor,
+                description: users[leader.id].description,
+                dungeonFloor: users[leader.id].dungeonFloor,
             }
         } else if(!users[author.id].inParty) {
             users[author.id].partyLeader = leader.username;
             users[author.id].inParty = true;
-            users[author.id].description = user[leader.id].description;
-            users[author.id].dungeonFloor = user[leader.id].dungeonFloor;
+            users[author.id].description = users[leader.id].description;
+            users[author.id].dungeonFloor = users[leader.id].dungeonFloor;
         } else {
             return message.reply('You must leave your current party to join another one.')
         }

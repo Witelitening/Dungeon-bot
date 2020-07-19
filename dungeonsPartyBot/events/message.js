@@ -5,7 +5,6 @@ module.exports.run = async (client, message, author) => {
 
 	const args = message.content.slice(prefix.length).split(' ');
     const commandName = args.shift().toLowerCase();
-    console.log(args[0]);
     
     if(!client.commands.has(commandName)) return;
     const command = client.commands.get(commandName);
@@ -14,7 +13,7 @@ module.exports.run = async (client, message, author) => {
     } catch (error) {
         message.reply('There was an error trying to execute that command!');
         console.log(`Error while executing command '${commandName}' with arguments: ${args}`);
-        client.commands.get('help').run(client, message, args, author);
+        client.commands.get('help').run(client, message, [], author);
         console.error(error);
     }
 };

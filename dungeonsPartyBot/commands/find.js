@@ -13,23 +13,23 @@ module.exports.run = (client, message, args, author) => {
     let f2PartiesDesc = [];
     let f3PartiesDesc = [];
     for(user in users) {
-        if(users[user].isPartyLeader) {
-            switch(users[user].dungeonFloor) {
+        if(users[user.id].isPartyLeader) {
+            switch(users[user.id].dungeonFloor) {
                 case 0:
-                    entranceParties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
-                    entrancePartiesDesc.push(users[i].description);
+                    entranceParties.push(users[user.id].name.substring(0, users[user.id].name.length - 5) + "'s party");
+                    entrancePartiesDesc.push(users[user.id].description);
                     break;
                 case 1:
-                    f1Parties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
-                    f1PartiesDesc.push(users[user].description);
+                    f1Parties.push(users[user.id].name.substring(0, users[user.id].name.length - 5) + "'s party");
+                    f1PartiesDesc.push(users[user.id].description);
                     break;
                 case 2:
-                    f2Parties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
-                    f2PartiesDesc.push(users[user].description);
+                    f2Parties.push(users[user.id].name.substring(0, users[user.id].name.length - 5) + "'s party");
+                    f2PartiesDesc.push(users[user.id].description);
                     break;
                 case 3:
-                    f3Parties.push(users[user].name.substring(0, users[user].name.length - 5) + "'s party");
-                    f3PartiesDesc.push(users[user].description);
+                    f3Parties.push(users[user.id].name.substring(0, users[user.id].name.length - 5) + "'s party");
+                    f3PartiesDesc.push(users[user.id].description);
                     break;
             }
         }
